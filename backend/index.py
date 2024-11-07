@@ -27,7 +27,14 @@ db_config = {
 }
 
 def get_db_connection():
-    return mysql.connector.connect(**db_config)
+    try:
+        connection = mysql.connector.connect(**db_config)
+        print("Conexión exitosa a la base de datos")
+        return connection
+    except mysql.connector.Error as err:
+        print(f"Error al conectar a la base de datos: {err}")
+        raise
+
 @app.route("/", methods=["GET"])
 def home():
     return "Bienvenido a la API de GPSs"
@@ -62,8 +69,8 @@ def verificar_cedula():
         else:
             return jsonify({"success": False, "message": "Cédula no encontrada"})
     except mysql.connector.Error as err:
-        print("Error en la consulta a la base de datos:", err)
-        return jsonify({"error": "Error en la consulta a la base de datos"}), 500
+        print(f"Error en la consulta a la base de datos: {err}")
+        return jsonify({"error": f"Error en la consulta a la base de datos: {err}"}), 500
 
 @app.route("/obtener-registros", methods=["GET"])
 def obtener_registros():
@@ -77,8 +84,8 @@ def obtener_registros():
         connection.close()
         return jsonify(results)
     except mysql.connector.Error as err:
-        print("Error en la consulta a la base de datos:", err)
-        return jsonify({"error": "Error en la consulta a la base de datos"}), 500
+        print(f"Error en la consulta a la base de datos: {err}")
+        return jsonify({"error": f"Error en la consulta a la base de datos: {err}"}), 500
     
 @app.route("/guardar-nuevo-registro", methods=["POST"])
 def guardar_nuevo_registro():
@@ -99,8 +106,8 @@ def guardar_nuevo_registro():
         connection.close()
         return jsonify({"success": True, "message": "Registro guardado exitosamente"})
     except mysql.connector.Error as err:
-        print("Error insertando datos:", err)
-        return jsonify({"success": False, "message": "Error guardando los datos"}), 500
+        print(f"Error insertando datos: {err}")
+        return jsonify({"success": False, "message": f"Error guardando los datos: {err}"}), 500
 
 @app.route("/obtener-datos", methods=["GET"])
 def obtener_datos():
@@ -123,8 +130,8 @@ def obtener_datos():
         connection.close()
         return jsonify(results)
     except Exception as e:
-        print("Error en la consulta a la base de datos:", e)
-        return jsonify({"error": "Error en la consulta a la base de datos"}), 500
+        print(f"Error en la consulta a la base de datos: {e}")
+        return jsonify({"error": f"Error en la consulta a la base de datos: {e}"}), 500
     
 @app.route("/guardar-registro", methods=["OPTIONS", "POST"])
 def guardar_registro():
@@ -173,8 +180,8 @@ def guardar_registro():
         return jsonify({"success": True, "message": "Registro guardado exitosamente"})
 
     except mysql.connector.Error as err:
-        print("Error insertando datos:", err)
-        return jsonify({"success": False, "message": "Error guardando los datos"}), 500
+        print(f"Error insertando datos: {err}")
+        return jsonify({"success": False, "message": f"Error guardando los datos: {err}"}), 500
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 10000))
