@@ -7,7 +7,7 @@ import { Input } from "../components/Input"
 import Button  from "../components/Button.jsx"
 import { Label } from "../components/Label"
 
-const API_URL = 'https://reporte-jorge.onrender.com/verificar-cedula'
+const API_URL = 'https://reporte-jorge.onrender.com:10000/verificar-cedula'
 
 const loginMessages = [
   "Ingresa tu cédula para comenzar."
