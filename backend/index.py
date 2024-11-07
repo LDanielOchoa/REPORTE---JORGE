@@ -5,20 +5,17 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 
-# Cargar variables de entorno
 load_dotenv()
 
 app = Flask(__name__)
-# Configuración de CORS, permitiendo la URL específica del frontend y soportando credenciales
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": "https://reporte-jorge.vercel.app"}}, supports_credentials=True)
 
-# Configuración de la conexión a la base de datos
 db_config = {
     "host": os.getenv("DB_HOST"),
     "user": os.getenv("DB_USER"),
     "password": os.getenv("DB_PASSWORD"),
     "database": os.getenv("DB_NAME"),
-    "port": int(os.getenv("DB_PORT", 3306))  # Puerto por defecto de MySQL si no se especifica en .env
+    "port": int(os.getenv("DB_PORT", 3306)) 
 }
 
 def get_db_connection():
@@ -31,11 +28,9 @@ def home():
 def root_post():
     return jsonify({"message": "Solicitud POST recibida en la raíz"}), 200
 
-# Ruta para verificar cédula
 @app.route("/verificar-cedula", methods=["OPTIONS", "POST"])
 def verificar_cedula():
     if request.method == "OPTIONS":
-        # Responder a la solicitud preflight con éxito
         return jsonify({"ok": True}), 200
 
     data = request.get_json()
@@ -123,11 +118,9 @@ def obtener_datos():
         print("Error en la consulta a la base de datos:", e)
         return jsonify({"error": "Error en la consulta a la base de datos"}), 500
     
-# Ruta para guardar registro
 @app.route("/guardar-registro", methods=["OPTIONS", "POST"])
 def guardar_registro():
     if request.method == "OPTIONS":
-        # Responder a la solicitud preflight con éxito
         return jsonify({"ok": True}), 200
 
     data = request.get_json()
@@ -154,7 +147,6 @@ def guardar_registro():
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
 
-        # Obtener el nombre basado en la cédula
         cursor.execute("SELECT nombre FROM auxiliares WHERE cedula = %s", (cedula,))
         result = cursor.fetchone()
 
@@ -163,7 +155,6 @@ def guardar_registro():
 
         nombre = result["nombre"]
 
-        # Insertar el registro con el nombre obtenido
         query = "INSERT INTO registros (cedula, nombre, entradasalida, lugar, latitud, longitud, ip) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         cursor.execute(query, (cedula, nombre, opcion, lugar, latitud, longitud, ip))
         connection.commit()
