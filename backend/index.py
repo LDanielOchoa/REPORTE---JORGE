@@ -8,6 +8,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+
+@app.after_request
+def apply_cors(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
+    return response
+
 CORS(app, resources={r"/*": {"origins": "https://reporte-jorge.vercel.app"}}, supports_credentials=True)
 
 db_config = {
