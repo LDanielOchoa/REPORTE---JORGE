@@ -3,11 +3,14 @@ from flask_cors import CORS
 import mysql.connector
 from datetime import datetime
 import os
+import logging
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
+
+logging.basicConfig(level=logging.DEBUG)
 
 @app.after_request
 def apply_cors(response):
@@ -44,23 +47,23 @@ def home():
 def root_post():
     return jsonify({"message": "Solicitud POST recibida en la raíz"}), 200
 
-@app.route("/verificar-cedula", methods=["OPTIONS", "POST"])
+@app.route("/verificar-cedula", methods=["POST"])
 def verificar_cedula():
-    if request.method == "OPTIONS":
-        return jsonify({"ok": True}), 200
-
-    data = request.get_json()
-    cedula = data.get("cedula")
-
-    if not cedula:
-        return jsonify({"error": "Cédula es requerida"}), 400
-
     try:
+        data = request.get_json()
+        cedula = data.get("cedula")
+        
+        if not cedula:
+            app.logger.error("Cédula no proporcionada")
+            return jsonify({"error": "Cédula es requerida"}), 400
+
+        # Conexión con la base de datos
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
         query = "SELECT * FROM auxiliares WHERE cedula = %s"
         cursor.execute(query, (cedula,))
         results = cursor.fetchall()
+
         cursor.close()
         connection.close()
 
@@ -68,11 +71,12 @@ def verificar_cedula():
             user = results[0]
             return jsonify({"success": True, "cedula": user["cedula"]})
         else:
-            return jsonify({"success": False, "message": "Cédula no encontrada"})
-    except mysql.connector.Error as err:
-        print(f"Error en la consulta a la base de datos: {err}")
-        return jsonify({"error": f"Error en la consulta a la base de datos: {err}"}), 500
+            app.logger.error("Cédula no encontrada: %s", cedula)
+            return jsonify({"success": False, "message": "Cédula no encontrada"}), 404
 
+    except Exception as e:
+        app.logger.error(f"Error al verificar cédula: {e}")
+        return jsonify({"error": "Error al verificar la cédula"}), 500
 @app.route("/obtener-registros", methods=["GET"])
 def obtener_registros():
     try:
