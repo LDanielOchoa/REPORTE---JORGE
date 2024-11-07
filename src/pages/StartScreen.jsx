@@ -78,7 +78,7 @@ export default function StartScreen() {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <motion.img
-                src="../public/sao6.png"
+                src="/sao6.png"
                 alt="Tu App Logo"
                 className="h-24 w-auto drop-shadow-lg"
                 whileHover={{ scale: 1.05, rotate: 5 }}

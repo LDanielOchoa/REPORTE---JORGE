@@ -56,7 +56,7 @@ export default function LoginScreen() {
       setRegisterError('Por favor, ingrese su nombre completo.')
       return
     }
-    if (isNaN(Number(cedula))) {
+    if (isNaN(Number(registerCedula))) {
       setRegisterError('La cédula debe ser un número válido')
       return
     }
@@ -67,7 +67,7 @@ export default function LoginScreen() {
     try {
       const response = await axios.post('http://127.0.0.1:10000/guardar-nuevo-registro', {
         nombre: fullName,
-        cedula: cedula
+        cedula: registerCedula
       })
       const { success, message } = response.data
   
@@ -193,7 +193,7 @@ export default function LoginScreen() {
                         id="register-cedula"
                         type="text"
                         placeholder="Ingresa tu cédula"
-                        value={cedula}
+                        value={registerCedula}
                         onChange={(e) => setRegisterCedula(e.target.value)}
                       />
                     </div>
