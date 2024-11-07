@@ -25,6 +25,7 @@ db_config = {
     "database": os.getenv("DB_NAME"),
     "port": int(os.getenv("DB_PORT", 51099)) 
 }
+print(f"DB_HOST: {os.getenv('DB_HOST')}, DB_USER: {os.getenv('DB_USER')}, DB_PASSWORD: {os.getenv('DB_PASSWORD')}")
 
 def get_db_connection():
     try:
