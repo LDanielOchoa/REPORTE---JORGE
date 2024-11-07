@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger
 } from "../components/dropdown-menu"
 
-const API_URL = 'http://127.0.0.1:10000/guardar-registro';
+const API_URL = 'https://reporte-jorge.onrender.com/guardar-registro';
 
 const Modal = ({ children, isOpen, onClose }) => (
   <AnimatePresence>

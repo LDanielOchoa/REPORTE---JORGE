@@ -30,7 +30,7 @@ export default function DataVisualization() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:10000/obtener-registros')
+      const response = await fetch('https://reporte-jorge.onrender.com/obtener-registros')
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }

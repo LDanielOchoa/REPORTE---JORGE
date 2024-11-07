@@ -74,7 +74,7 @@ export default function MapaEmpleados() {
   const fetchEmployeeData = useCallback(async () => {
     try {
       console.log(`Fetching data for date: ${selectedDate}`)
-      const response = await axios.get(`http://localhost:10000/obtener-datos?fecha=${selectedDate}`)
+      const response = await axios.get(`https://reporte-jorge.onrender.com/obtener-datos?fecha=${selectedDate}`)
       console.log('Respuesta completa:', response)
       console.log('Datos recibidos:', response.data)
       

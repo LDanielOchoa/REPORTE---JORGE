@@ -7,7 +7,7 @@ import { Input } from "../components/Input"
 import Button  from "../components/Button.jsx"
 import { Label } from "../components/Label"
 
-const API_URL = 'http://127.0.0.1:10000/verificar-cedula'
+const API_URL = 'https://reporte-jorge.onrender.com/verificar-cedula'
 
 const loginMessages = [
   "Ingresa tu cédula para comenzar."
@@ -65,7 +65,7 @@ export default function LoginScreen() {
     setRegisterError('')
   
     try {
-      const response = await axios.post('http://127.0.0.1:10000/guardar-nuevo-registro', {
+      const response = await axios.post('https://reporte-jorge.onrender.com/guardar-nuevo-registro', {
         nombre: fullName,
         cedula: registerCedula
       })
