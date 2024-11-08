@@ -11,7 +11,8 @@ import 'leaflet/dist/leaflet.css'
 const CustomMarker = ({ employees, isDarkMode }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const currentEmployee = employees[currentIndex]
-  const markerColor = currentEmployee.entradasalida === 'Entrada' ? '#4CAF50' : '#FF5252'
+  console.log('Estado de entrada/salida:', currentEmployee.entradasalida)
+  const markerColor = currentEmployee.entradasalida?.toLowerCase() === 'entrada' ? '#4CAF50' : '#FF5252'
   const customIcon = L.divIcon({
     className: 'custom-div-icon',
     html: `<div style="background-color: ${markerColor}; width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
@@ -43,7 +44,7 @@ const CustomMarker = ({ employees, isDarkMode }) => {
           <p className="text-sm"><span className="font-medium">Cédula:</span> {currentEmployee.cedula}</p>
           <p className="text-sm"><span className="font-medium">Lugar:</span> {currentEmployee.lugar}</p>
           <p className="text-sm"><span className="font-medium">Tiempo:</span> {new Date(currentEmployee.tiempo).toLocaleString()}</p>
-          <p className={`text-sm font-medium ${currentEmployee.entradasalida === 'Entrada' ? 'text-green-500' : 'text-red-500'}`}>
+          <p className={`text-sm font-medium ${currentEmployee.entradasalida?.toLowerCase() === 'entrada' ? 'text-green-500' : 'text-red-500'}`}>
             Estado: {currentEmployee.entradasalida}
           </p>
           {employees.length > 1 && (

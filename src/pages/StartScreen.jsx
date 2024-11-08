@@ -33,7 +33,7 @@ export default function StartScreen() {
   }, [goToNextQuote, navigate])
 
   useEffect(() => {
-    const quoteInterval = setInterval(goToNextQuote, 2000)
+    const quoteInterval = setInterval(goToNextQuote, 3000)
     const progressInterval = setInterval(() => {
       setProgress((prevProgress) => {
         if (prevProgress >= 1) {

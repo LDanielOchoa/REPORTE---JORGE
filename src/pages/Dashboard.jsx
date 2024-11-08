@@ -147,12 +147,12 @@ export default function Dashboard() {
             <Eye className="mr-2 h-5 w-5" />
           </motion.button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
-          <DropdownMenuItem onClick={() => navigate('/maps')} className="flex items-center p-2 hover:bg-emerald-100">
+        <DropdownMenuContent className="bg-white w-56">
+          <DropdownMenuItem onClick={() => navigate('/maps')} className="bg-white flex items-center p-2 hover:bg-emerald-100">
             <MapPin className="mr-2 h-5 w-5 text-emerald-600" />
             <span>Ver Mapa</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleVisualizarDatos} className="flex items-center p-2 hover:bg-emerald-100">
+          <DropdownMenuItem onClick={handleVisualizarDatos} className="bg-white flex items-center p-2 hover:bg-emerald-100">
             <BarChart2 className="mr-2 h-5 w-5 text-emerald-600" />
             <span>Visualizar Datos</span>
           </DropdownMenuItem>
@@ -191,7 +191,6 @@ export default function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
-              Dashboard
             </motion.h1>
             <motion.div
               initial={{ opacity: 0 }}
