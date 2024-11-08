@@ -19,7 +19,7 @@ def apply_cors(response):
     response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
     return response
 
-CORS(app, resources={r"/*": {"origins": "https://reporte-jorge.vercel.app"}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": "localhost:5173"}}, supports_credentials=True)
 
 db_config = {
     "host": os.getenv("DB_HOST"),
