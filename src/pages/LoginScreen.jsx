@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/Tabs"
 import { Input } from "../components/Input"
-import Button  from "../components/Button.jsx"
+import { Button } from '../components/Button'
 import { Label } from "../components/Label"
 
 const API_URL = 'https://reporte-jorge.onrender.com/verificar-cedula';

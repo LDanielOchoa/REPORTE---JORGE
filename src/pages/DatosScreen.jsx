@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import Button from "../components/Button"
+import { Button } from '../components/Button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/Table"
 import { Popover, PopoverContent, PopoverTrigger } from "../components/popover"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../components/command"
