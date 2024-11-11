@@ -62,12 +62,28 @@ export default function DataVisualization() {
   }
 
   const downloadXLSX = (data) => {
-    const worksheet = XLSX.utils.json_to_sheet(data)
+    const formattedData = data.map(registro => ({
+      ...registro,
+      tiempo: formatDate(new Date(registro.tiempo))
+    }))
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedData)
     const workbook = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(workbook, worksheet, "Registros")
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
     const data_blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' })
     saveAs(data_blob, 'registros.xlsx')
+  }
+
+  const formatDate = (date) => {
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const seconds = String(date.getSeconds()).padStart(2, '0')
+
+    return `${year}-${month}-${day}-${hours}:${minutes}:${seconds}`
   }
 
   const getUniqueValues = (key) => {
